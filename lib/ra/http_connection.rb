@@ -32,11 +32,11 @@ module Ra
     def execute(request)
       raw_request = raw_request(request)
       raw_response = http.request(raw_request)
-      charset = response.type_params["charset"]
+      charset = raw_response.type_params["charset"]
       {
-        :status => response.code.to_i,
-        :headers => response.to_hash,
-        :body => force_charset(response.body, charset)
+        :status => raw_response.code.to_i,
+        :headers => raw_response.to_hash,
+        :body => force_charset(raw_response.body, charset)
       }
     rescue Errno::ECONNREFUSED => e
       raise ConnectionError.new(e)
@@ -70,6 +70,10 @@ module Ra
                   # TODO: Set timeout options etc
                   h
                 end
+    end
+
+    def join(path)
+      URI.join(self.uri, path)
     end
 
     private
