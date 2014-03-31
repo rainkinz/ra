@@ -6,6 +6,21 @@ module Ra
 
     subject { HttpConnection.new("http://localhost:8983") }
 
+    describe HttpConnection::ConnectionError do
+
+      it "should raise a ConnectionError when it can't connect" do
+        request = Request.new(
+          :path => "/update",
+          :method => :post,
+          :data => books_json
+        )
+        stub_request(:any, subject.join(request.path)).to_timeout
+        expect {
+          subject.execute(request)
+        }.to raise_error(HttpConnection::ConnectionError)
+      end
+    end
+
     describe "#execute" do
 
       describe "PostRequest" do

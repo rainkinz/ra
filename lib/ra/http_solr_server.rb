@@ -12,7 +12,9 @@ module Ra
     end
 
 
-    def add(doc)
+    def add(docs)
+      docs = Array(docs)
+
 
     end
 

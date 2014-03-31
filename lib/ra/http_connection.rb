@@ -38,7 +38,7 @@ module Ra
         :headers => raw_response.to_hash,
         :body => force_charset(raw_response.body, charset)
       }
-    rescue Errno::ECONNREFUSED => e
+    rescue Timeout::Error, Errno::ECONNREFUSED => e
       raise ConnectionError.new(e)
     end
 
