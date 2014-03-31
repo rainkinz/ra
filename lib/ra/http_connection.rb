@@ -1,18 +1,26 @@
+require 'uri'
+require 'net/http'
+
 module Ra
 
   class Request
     attr_reader :path, :method, :headers, :data
 
     def initialize(args = {})
-      #@uri = convert_to_uri(args.fetch(:uri))
       @path = args.fetch(:path)
 
       @method = args.fetch(:method) { :get }
-      @headers = args.fetch(:headers) { [] }
+      @headers = args.fetch(:headers) { default_headers }
       @data = args[:data]
     end
 
     private
+
+    def default_headers
+      {
+        'Content-Type' => 'application/json'
+      }
+    end
 
     def convert_to_uri(uri_or_string)
       uri_or_string.is_a?(URI) ? uri_or_string : URI.parse(uri_or_string)

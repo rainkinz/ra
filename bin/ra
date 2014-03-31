@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+lib_dir = File.expand_path("../../lib", __FILE__)
+$: << lib_dir
+
+require 'bundler/setup'
+Bundler.require(:console)
+
+require 'ra'
+require 'ra/console'
+require 'pry'
+
+include Ra::Console
+
+Pry.start

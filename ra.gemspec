@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Ra::VERSION
   spec.authors       = ["rainkinz"]
   spec.email         = ["brendan.grainger@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{Ruby library for interacting with solr}
+  spec.summary       = %q{Ruby library for interacting solr}
   spec.homepage      = ""
   spec.license       = "MIT"
 
