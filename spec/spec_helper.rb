@@ -4,6 +4,82 @@
 # loaded once.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require 'webmock/rspec'
+require 'pry'
+
+require 'ra'
+
+module Helpers
+  def start_solr
+    puts "Starting solr"
+  end
+
+  def stop_solr
+    puts "Stopping solr"
+  end
+end
+
+
+module FixtureHelpers
+  def books_json
+    <<-JSON
+    [
+      {
+        "id" : "978-0641723445",
+        "cat" : ["book","hardcover"],
+        "name" : "The Lightning Thief",
+        "author" : "Rick Riordan",
+        "series_t" : "Percy Jackson and the Olympians",
+        "sequence_i" : 1,
+        "genre_s" : "fantasy",
+        "inStock" : true,
+        "price" : 12.50,
+        "pages_i" : 384
+      }
+    ,
+      {
+        "id" : "978-1423103349",
+        "cat" : ["book","paperback"],
+        "name" : "The Sea of Monsters",
+        "author" : "Rick Riordan",
+        "series_t" : "Percy Jackson and the Olympians",
+        "sequence_i" : 2,
+        "genre_s" : "fantasy",
+        "inStock" : true,
+        "price" : 6.49,
+        "pages_i" : 304
+      }
+    ,
+      {
+        "id" : "978-1857995879",
+        "cat" : ["book","paperback"],
+        "name" : "Sophie's World : The Greek Philosophers",
+        "author" : "Jostein Gaarder",
+        "sequence_i" : 1,
+        "genre_s" : "fantasy",
+        "inStock" : true,
+        "price" : 3.07,
+        "pages_i" : 64
+      }
+    ,
+      {
+        "id" : "978-1933988177",
+        "cat" : ["book","paperback"],
+        "name" : "Lucene in Action, Second Edition",
+        "author" : "Michael McCandless",
+        "sequence_i" : 1,
+        "genre_s" : "IT",
+        "inStock" : true,
+        "price" : 30.50,
+        "pages_i" : 475
+      }
+    ]
+    JSON
+  end
+end
+
+
+
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
@@ -14,4 +90,8 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = 'random'
+
+  config.include Helpers
+  config.include FixtureHelpers
 end
+
