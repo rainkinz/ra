@@ -3,7 +3,7 @@ require 'yajl'
 module Ra
 
   class HttpSolrServer
-    attr_reader :connection
+    attr_reader :connection, :path
 
     def initialize(connection_or_url, opts = {})
       if connection_or_url.is_a?(HttpConnection)
@@ -11,6 +11,8 @@ module Ra
       else
         @connection = HttpConnection.new(connection_or_url, opts)
       end
+
+      @path = @connection.uri.path
     end
 
 
@@ -22,10 +24,19 @@ module Ra
 
       request = Request.new(
         :method => :post,
-        :path => '/update',
+        :path => File.join(self.path, '/update'),
         :data => Yajl::Encoder.encode(docs)
       )
 
+      @connection.execute(request)
+    end
+
+    def commit
+      request = Request.new(
+        :method => :post,
+        :path => File.join(self.path, '/update'),
+        :data => "{ \"commit\": {} }"
+      )
       @connection.execute(request)
     end
 

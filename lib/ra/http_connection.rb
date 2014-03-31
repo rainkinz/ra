@@ -14,6 +14,10 @@ module Ra
       @data = args[:data]
     end
 
+    def to_s
+      "#{method}: #{path}"
+    end
+
     private
 
     def default_headers
